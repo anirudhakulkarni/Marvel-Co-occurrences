@@ -54,7 +54,7 @@ class Graph {
     }
     void independant_storylines_dfs(){
         boolean visited[]=new boolean[this.size];
-        ArrayList<vertex[] > CompList = new ArrayList<vertex[] >(this.size); 
+        ArrayList<vertex[] > CompList = new ArrayList<vertex[] >(); 
         vertex[] occur=this.Vert.clone();
         for (int ii = 0; ii < occur.length; ii++) {
             if(!visited[ii]){
@@ -137,7 +137,8 @@ public class A4_2019CS50421 {
             //exact input
             while ((line=br.readLine())!=null) {
                 String[] values=line.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
-                values[1]=values[1].replaceAll("\"", "");
+                if(values[1].charAt(0)=='"'){values[1]=values[1].substring(1,values[1].length()-1);}
+                //values[1]=values[1].replaceAll("\"", "");
                 if(index==0){
                     index++;
                     continue;
@@ -148,30 +149,45 @@ public class A4_2019CS50421 {
             }
             while ((line=br2.readLine())!=null) {
                 String[] values=line.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
-                values[0]=values[0].replaceAll("\"", "");
-                values[1]=values[1].replaceAll("\"", "");
+                if(values[0].charAt(0)=='"'){values[0]=values[0].substring(1,values[0].length()-1);}
+                if(values[1].charAt(0)=='"'){values[1]=values[1].substring(1,values[1].length()-1);}
+                
+                //values[0]=values[0].replaceAll("\"", "");
+                //values[1]=values[1].replaceAll("\"", "");
                 if(values[2].equals("Weight"))continue;
                 graph.addEdge(values[0], values[1], Integer.parseInt(values[2]));
             }
             //graph.printer();
             if(args[2].equals("average")){
+                if(graph.size==0){
+                    System.out.println("0.00");
+                    return;
+                }
                 graph.average();
             }        
             else if(args[2].equals("rank")){
                 //comment here
-                FileOutputStream f = new FileOutputStream("rank.txt");System.setOut(new PrintStream(f));
+                //FileOutputStream f = new FileOutputStream("rank.txt");System.setOut(new PrintStream(f));
+                if(graph.size==0){
+                    System.out.println();
+                    return;
+                }
                 graph.rank();
             }   
             else {
                 //comment here
-                FileOutputStream f = new FileOutputStream("dfs.txt");System.setOut(new PrintStream(f));
+                //FileOutputStream f = new FileOutputStream("dfs.txt");System.setOut(new PrintStream(f));
+                if(graph.size==0){
+                    System.out.println();
+                    return;
+                }
                 graph.independant_storylines_dfs();
             } 
         } 
         catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        PrintStream consoleStream = new PrintStream(new FileOutputStream(FileDescriptor.out));System.setOut(consoleStream);long stopTime = System.nanoTime();System.out.println((stopTime - startTime)/1000000000.0);  
+        //PrintStream consoleStream = new PrintStream(new FileOutputStream(FileDescriptor.out));System.setOut(consoleStream);long stopTime = System.nanoTime();System.out.println((stopTime - startTime)/1000000000.0);  
     }
     
 }
@@ -273,12 +289,12 @@ class MergeSortArr
             else{
                 int ii=0;
                 while(ii<L[i].length){
-                    if (L[i][ii].label.compareToIgnoreCase(R[j][ii].label)>0) {
+                    if (L[i][ii].label.compareTo(R[j][ii].label)>0) {
                         arr[k] = L[i];
                         i++;
                         break;
                     }
-                    else if(L[i][ii].label.compareToIgnoreCase(R[j][ii].label)<0){
+                    else if(L[i][ii].label.compareTo(R[j][ii].label)<0){
                         arr[k] = R[j];
                         j++;
                         break;
@@ -337,7 +353,7 @@ class MergeSortSize
         int i = 0, j = 0;
         int k = l;
         while (i < n1 && j < n2) {
-            if (L[i].label.compareToIgnoreCase(R[j].label)>0) {
+            if (L[i].label.compareTo(R[j].label)>0) {
                 arr[k] = L[i];
                 i++;
             }

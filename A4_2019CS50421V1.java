@@ -39,7 +39,7 @@ class Graph {
         float ans=0;
         for (int ii = 0; ii < this.size; ii++) {
             ans+=this.Vert[ii].nghbrs;
-        } 
+        }
         ans/=this.size;
         System.out.printf("%.2f", ans);
         System.out.println();
@@ -137,7 +137,8 @@ public class A4_2019CS50421V1 {
             //exact input
             while ((line=br.readLine())!=null) {
                 String[] values=line.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
-                values[1]=values[1].replaceAll("\"", "");
+                if(values[1].charAt(0)=='"'){values[1]=values[1].substring(1,values[1].length()-1);}
+                //values[1]=values[1].replaceAll("\"", "");
                 if(index==0){
                     index++;
                     continue;
@@ -148,23 +149,38 @@ public class A4_2019CS50421V1 {
             }
             while ((line=br2.readLine())!=null) {
                 String[] values=line.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
-                values[0]=values[0].replaceAll("\"", "");
-                values[1]=values[1].replaceAll("\"", "");
+                if(values[0].charAt(0)=='"'){values[0]=values[0].substring(1,values[0].length()-1);}
+                if(values[1].charAt(0)=='"'){values[1]=values[1].substring(1,values[1].length()-1);}
+                
+                //values[0]=values[0].replaceAll("\"", "");
+                //values[1]=values[1].replaceAll("\"", "");
                 if(values[2].equals("Weight"))continue;
                 graph.addEdge(values[0], values[1], Integer.parseInt(values[2]));
             }
             //graph.printer();
             if(args[2].equals("average")){
+                if(graph.size==0){
+                    System.out.println("0.00");
+                    return;
+                }
                 graph.average();
             }        
             else if(args[2].equals("rank")){
                 //comment here
                 FileOutputStream f = new FileOutputStream("rank.txt");System.setOut(new PrintStream(f));
+                if(graph.size==0){
+                    System.out.println();
+                    return;
+                }
                 graph.rank();
             }   
             else {
                 //comment here
                 FileOutputStream f = new FileOutputStream("dfs.txt");System.setOut(new PrintStream(f));
+                if(graph.size==0){
+                    System.out.println();
+                    return;
+                }
                 graph.independant_storylines_dfs();
             } 
         } 
