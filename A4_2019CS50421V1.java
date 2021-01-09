@@ -145,13 +145,12 @@ public class A4_2019CS50421V1 {
                 }
                 graph.addVertex(values[1], index-1);
                 index++;
-                //System.out.println(values[1]+" "+index);
             }
             while ((line=br2.readLine())!=null) {
                 String[] values=line.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
                 if(values[0].charAt(0)=='"'){values[0]=values[0].substring(1,values[0].length()-1);}
                 if(values[1].charAt(0)=='"'){values[1]=values[1].substring(1,values[1].length()-1);}
-                
+                //uncomment here if "" business is over
                 //values[0]=values[0].replaceAll("\"", "");
                 //values[1]=values[1].replaceAll("\"", "");
                 if(values[2].equals("Weight"))continue;
@@ -174,7 +173,7 @@ public class A4_2019CS50421V1 {
                 }
                 graph.rank();
             }   
-            else {
+            else if(args[2].equals("independent_storylines_dfs")){
                 //comment here
                 FileOutputStream f = new FileOutputStream("dfs.txt");System.setOut(new PrintStream(f));
                 if(graph.size==0){
@@ -191,10 +190,8 @@ public class A4_2019CS50421V1 {
     }
     
 }
-class MergeSort 
-{
-    static void merge(vertex arr[], int l, int m, int r)
-    {
+class MergeSort {
+    static void merge(vertex arr[], int l, int m, int r){
         int n1 = m - l + 1;
         int n2 = r - m;
         vertex L[] = new vertex[n1];
@@ -203,9 +200,8 @@ class MergeSort
             L[i] = arr[l + i];
         for (int j = 0; j < n2; ++j)
             R[j] = arr[m + 1 + j];
-        int i = 0, j = 0;
-        int k = l;
-        while (i < n1 && j < n2) {
+        int i=0,j=0,k=l;
+        while(i<n1&&j<n2){
             if (L[i].weights_sum > R[j].weights_sum) {
                 arr[k] = L[i];
                 i++;
@@ -228,47 +224,27 @@ class MergeSort
         }
         while (i < n1) {
             arr[k] = L[i];
-            i++;
-            k++;
+            i++;k++;
         }
         while (j < n2) {
             arr[k] = R[j];
-            j++;
-            k++;
+            j++;k++;
         }
     }
-    static void sort(vertex arr[], int l, int r)
-    {
-
+    static void sort(vertex arr[], int l, int r){
         if (l < r) {
-            // Find the middle point
             int m = (l + r) / 2;
- 
-            // Sort first and second halves
             sort(arr, l, m);
             sort(arr, m + 1, r);
-            // Merge the sorted halves
             merge(arr, l, m, r);
         }
     }
- 
-    /* A utility function to print array of size n */
-    static void printArray(int arr[])
-    {
-        int n = arr.length;
-        for (int i = 0; i < n; ++i)
-            System.out.print(arr[i] + " ");
-        System.out.println();
-    }
 }
 
-class MergeSortArr 
-{
-    static void merge(vertex arr[][], int l, int m, int r)
-    {
+class MergeSortArr {
+    static void merge(vertex arr[][], int l, int m, int r){
         int n1 = m - l + 1;
         int n2 = r - m;
- 
         vertex[][] L = new vertex[n1][];
         vertex[][] R = new vertex[n2][];
         for (int i = 0; i < n1; ++i)
@@ -303,55 +279,40 @@ class MergeSortArr
                         ii++;
                     }
                 }
-                
             }
             k++;
         }
-        while (i < n1) {
-            arr[k] = L[i];
-            i++;
-            k++;
+        while(i<n1){
+            arr[k]=L[i];
+            i++;k++;
         }
-        while (j < n2) {
-            arr[k] = R[j];
-            j++;
-            k++;
+        while(j<n2){
+            arr[k]=R[j];
+            j++;k++;
         }
     }
  
-    static void sort(vertex[] [] arr, int l, int r)
-    {
-        if (l < r) {
-            int m = (l + r) / 2; 
-            sort(arr, l, m);
-            sort(arr, m + 1, r);
-            merge(arr, l, m, r);
+    static void sort(vertex[] [] arr, int l, int r){
+        if(l<r){
+            int m=(l+r)/2; 
+            sort(arr,l,m);
+            sort(arr,m+1,r);
+            merge(arr,l,m,r);
         }
-    }
-    static void printArray(int arr[])
-    {
-        int n = arr.length;
-        for (int i = 0; i < n; ++i)
-            System.out.print(arr[i] + " ");
-        System.out.println();
     }
 }
-class MergeSortSize
-{
-    static void merge(vertex arr[], int l, int m, int r)
-    {
-        int n1 = m - l + 1;
-        int n2 = r - m;
- 
-        vertex L[] = new vertex[n1];
-        vertex R[] = new vertex[n2];
-
-        for (int i = 0; i < n1; ++i)
+class MergeSortSize{
+    static void merge(vertex arr[], int l, int m, int r){
+        int n1=m-l+1;
+        int n2=r-m;
+        vertex L[]=new vertex[n1];
+        vertex R[]=new vertex[n2];
+        for (int i=0; i<n1; ++i)
             L[i] = arr[l + i];
-        for (int j = 0; j < n2; ++j)
-            R[j] = arr[m + 1 + j]; 
-        int i = 0, j = 0;
-        int k = l;
+        for (int j=0;j<n2;++j)
+            R[j]=arr[m+1+j]; 
+        int i=0, j=0;
+        int k=l;
         while (i < n1 && j < n2) {
             if (L[i].label.compareTo(R[j].label)>0) {
                 arr[k] = L[i];
@@ -361,27 +322,23 @@ class MergeSortSize
                 arr[k] = R[j];
                 j++;
             }
-        
             k++;
         }
-        while (i < n1) {
-            arr[k] = L[i];
-            i++;
-            k++;
+        while(i<n1) {
+            arr[k]=L[i];
+            i++;k++;
         }
-        while (j < n2) {
-            arr[k] = R[j];
-            j++;
-            k++;
+        while(j<n2) {
+            arr[k]=R[j];
+            j++;k++;
         }
     }
-    static void sort(vertex arr[], int l, int r)
-    {
-        if (l < r) {
-            int m = (l + r) / 2;
-           sort(arr, l, m);
-            sort(arr, m + 1, r);
-            merge(arr, l, m, r);
+    static void sort(vertex arr[], int l, int r){
+        if(l<r){
+            int m=(l+r)/2;
+            sort(arr,l,m);
+            sort(arr,m+1,r);
+            merge(arr,l,m,r);
         }
     }
 }
