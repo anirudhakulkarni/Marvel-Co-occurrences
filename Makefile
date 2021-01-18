@@ -1,14 +1,14 @@
 run:
-	javac assignment4.java
-	java assignment4 nodes.csv edges.csv
+	javac A4_2019CS50421V1.java
+	java A4_2019CS50421V1 nodes.csv edges.csv
 avg:
-	javac assignment4.java
-	java assignment4 nodes.csv edges.csv average
+	javac A4_2019CS50421V1.java
+	java A4_2019CS50421V1 nodes.csv edges.csv average
 rank:
-	javac assignment4.java
-	java assignment4 nodes.csv edges.csv rank
+	javac A4_2019CS50421V1.java
+	java A4_2019CS50421V1 nodes.csv edges.csv rank
 dfs:
-	javac assignment4.java
-	java assignment4 nodes.csv edges.csv independent_storylines_dfs
+	javac A4_2019CS50421V1.java
+	java A4_2019CS50421V1 nodes.csv edges.csv independent_storylines_dfs
 clean:
 	rm *.class
